@@ -10,8 +10,10 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'unblevable/quick-scope'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-startify'
-Plug 'junegunn/fzf.vim'
-Plug 'stsewd/fzf-checkout.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make', 'branch': 'main' }
 Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
@@ -38,7 +40,9 @@ nmap <F1> :NERDTreeToggle <CR>
 nmap <C-h> :bp<CR>
 nmap <C-l> :bn<CR>
 nmap <C-x> :Bclose<CR>
-nmap <C-p> :Files<CR>
+nmap <C-p> :Telescope find_files<CR>
+nnoremap <C-f> :Telescope live_grep<CR>
+nnoremap <C-b> :Telescope git_branches<CR>
 nnoremap <CR> :noh<CR><CR>
 
 
@@ -70,6 +74,23 @@ let g:NERDTreeIgnore = ['^__pycache__$']
 let g:NERDTreeGitStatusWithFlags = 1
 let g:python3_host_prog = '/usr/bin/python'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Telescope
+lua << EOF
+require('telescope').setup {
+  extensions = {
+    fzf = {
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+}
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+EOF
 
 " CoC configs
 source $HOME/.config/nvim/coc.vim
