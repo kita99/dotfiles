@@ -23,6 +23,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'lilydjwg/colorizer'
+Plug 'wellle/targets.vim'
 call plug#end()            " required
 "
 " Brief help
@@ -45,9 +46,10 @@ nnoremap <CR> :noh<CR><CR>
 syntax enable
 set number
 
+let g:solarized_termcolors=16
+let g:solarized_contrast = "normal"
 colorscheme solarized
 set background=dark
-let g:solarized_termcolors=16
 
 let g:airline_theme='murmur'
 let g:airline#extensions#tabline#enabled = 1
