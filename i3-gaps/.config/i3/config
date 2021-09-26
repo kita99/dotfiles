@@ -24,7 +24,9 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy-multimonitor -n --blur==0x4 --nofork
+exec --no-startup-id xset s on
+exec --no-startup-id xset s 600
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy-multimonitor -n --blur==0x4
 
 # Remap caps lock to esc
 exec --no-startup-id setxkbmap -option caps:escape
