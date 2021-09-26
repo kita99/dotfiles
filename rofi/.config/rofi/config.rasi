@@ -1,10 +1,9 @@
 configuration {
-  font: "Hasklig Medium 18";
+  font: "Iosevka Nerd Font Mono 14";
   show-icons: true;
-  fullscreen: true;
-  display-drun: "";
-  display-run: "";
-  display-window: "";
+  display-drun: "";
+  display-run: "";
+  display-window: "";
 }
 
 * {
@@ -23,7 +22,7 @@ configuration {
 window {
   transparency: "real";
   background-color: transparent;
-  width: 500px;
+  fullscreen: true;
 }
 
 mainbox {
@@ -32,27 +31,42 @@ mainbox {
 
 inputbar {
   margin: 0px 0px 20px 0px;
-  children: [prompt, textbox-prompt-colon, entry, case-indicator];
+  children: [prompt, textbox-prompt-colon, entry];
+  background-color: #ffffff;
+  border-radius: 50px;
+  border: 2px;
+  border-color: @blue;
 }
 
 prompt {
-    text-color: @green;
+  text-color: @blue;
+  background-color: transparent;
+  padding: 0 0 0 16px;
+  font: "Iosevka Nerd Font Mono 24";
+}
+
+entry {
+  text-color: #000000;
+  border-radius: 25px;
+  placeholder: "Search...";
+  font: "Iosevka Nerd Font Mono 12";
+  padding: 10px;
 }
 
 textbox-prompt-colon {
   expand: false;
-  str: " ";
+  str: "";
 }
 
 listview {
   spacing: 5px;
   dynamic: true;
   scrollbar: false;
+  border: 0;
 }
 
 element {
   padding: 5px 10px 5px 10px;
-  border-radius: 5px;
   highlight: @yellow;
   border: 1px solid;
   border-color: white;
