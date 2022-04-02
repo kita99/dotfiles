@@ -32,17 +32,17 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy-multimonitor
 exec --no-startup-id setxkbmap -option caps:escape
 
 # Startup (notifications, wallpaper, status bar, sound, etc...)
-exec --no-startup-id /home/kita/Projects/personal/notification-system/main.py 
-exec --no-startup-id compton --blur-background --blur-method kawase
-exec --no-startup-id feh --bg-fill ~/Images/rtu9ybvxn6v31.png
+exec --no-startup-id picom --experimental-backend
+exec --no-startup-id feh --bg-fill ~/Images/Wallpapers/techno-alley-cyber.jpg
 exec --no-startup-id ~/.config/polybar/launch.sh 
-exec --no-startup-id nm-applet
 
 # Styling
-new_window pixel 0
+new_window pixel 2
 gaps inner 8
 gaps outer 3
-
+client.focused 		#2e9ef4 #cb4b16 #ffffff #2e9ef4
+client.unfocused 	#2e9ef4 #003366 #ffffff #2e9ef4
+smart_borders on
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -58,7 +58,10 @@ bindsym $mod+Shift+Return exec google-chrome-stable
 
 # application menu
 bindsym $mod+space exec --no-startup-id rofi -modi run -show drun -show-icons
-bindsym $mod+Tab exec --no-startup-id rofi -show window
+bindsym Mod1+Tab exec --no-startup-id rofi -show window
+
+# project picker menu
+bindsym $mod+p exec --no-startup-id ~/DevEnvironments/picker.sh
 
 # kill focused window
 bindsym $mod+Shift+q kill
