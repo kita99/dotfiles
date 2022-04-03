@@ -63,17 +63,25 @@ highlight SignColumn guibg=black ctermbg=black
 highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
 highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
 
+highlight FgCocErrorFloatBgCocFloating ctermfg=darkred ctermbg=white
+
 
 " Misc
 set autoindent
 set mouse=a
 set nowrap           " do not automatically wrap on load
 set formatoptions-=t " do not automatically wrap text when typing
+set undofile " Maintain undo history between sessions
+set undodir=~/.config/nvim/undodir
+
 
 let g:NERDTreeIgnore = ['^__pycache__$']
 let g:NERDTreeGitStatusWithFlags = 1
 let g:python3_host_prog = '/usr/bin/python'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+let &t_ti = &t_ti . "\033]10;#f6f3e8\007\033]11;#242424\007"
+let &t_te = &t_te . "\033]110\007\033]111\007"
 
 " Telescope
 lua << EOF
