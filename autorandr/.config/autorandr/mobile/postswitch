@@ -8,4 +8,6 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
     MONITOR=$m polybar -c ~/.config/polybar/config.ini --reload main &
 done
 
-feh --bg-fill ~/Pictures/RFNX387.jpeg
+feh --bg-fill ~/Images/c-base-hackerspace-berlin.jpg
+
+i3-msg '[class="Google-chrome"]' move to workspace 1
