@@ -24,8 +24,7 @@ font pango:Iosevka Term Nerd Font Mono 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xset s on
-exec --no-startup-id xset s 600
+exec --no-startup-id xset s 240
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy-multimonitor -n --blur==0x4
 
 # Remap caps lock to esc
@@ -49,7 +48,16 @@ smart_borders on
 floating_modifier $mod
 
 # Lock screen
-bindsym $mod+Shift+a exec notify-send "The screen will be locked shortly..." && i3lock-fancy-multimonitor -n --blur=0x4
+bindsym $mod+Shift+a exec notify-send "The screen will be locked shortly..." && loginctl lock-session
+
+# Control brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +1%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 1%-
+
+# Control sound
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +1%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -1%
 
 # start a terminal
 bindsym $mod+Return exec kitty
@@ -187,3 +195,9 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+plus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+plus scratchpad show
