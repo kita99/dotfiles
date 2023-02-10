@@ -33,8 +33,9 @@ exec --no-startup-id setxkbmap -option caps:escape
 
 # Startup (notifications, wallpaper, status bar, sound, etc...)
 exec --no-startup-id picom --experimental-backend
-exec --no-startup-id feh --bg-fill ~/Images/Wallpapers/techno-alley-cyber.jpg
-exec --no-startup-id ~/.config/polybar/launch.sh 
+exec --no-startup-id feh --bg-fill ~/Images/Wallpapers/vv1bthc0ocz91.jpg
+exec --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id ~/.config/i3/chrome-tab-dragging.py
 
 # Styling
 new_window pixel 2
