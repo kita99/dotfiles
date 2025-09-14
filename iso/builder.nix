@@ -64,6 +64,9 @@
     # Create root-blank snapshot for impermanence (disko already mounted at /mnt)
     btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
 
+    # Create necessary directory structure
+    mkdir -p /mnt/etc/nixos
+
     # Copy dotfiles to the mounted system
     cp -r /tmp/dotfiles /mnt/etc/nixos
 
@@ -75,4 +78,3 @@
   '';
   environment.etc."auto-install.sh".mode = "0755";
 }
-
