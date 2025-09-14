@@ -20,23 +20,8 @@
           type = "8200";
           content = { type = "swap"; };
         };
-        root = {
-          size = "90%";
-          content = {
-            type = "btrfs";
-            extraArgs = [ "-L" "nixos" ];
-            mountpoint = "/";
-            subvolumes = {
-              root = { mountpoint = "/"; };
-              nix = { mountpoint = "/nix"; };
-              persist = { mountpoint = "/persist"; };
-              log = { mountpoint = "/var/log"; };
-              tmp = { mountpoint = "/tmp"; };
-            };
-          };
-        };
         secure = {
-          size = "10%";
+          size = "50GiB";
           content = {
             type = "luks";
             name = "secure";
@@ -48,6 +33,21 @@
                 ssh = { mountpoint = "/secure/ssh"; };
                 secrets = { mountpoint = "/secure/secrets"; };
               };
+            };
+          };
+        };
+        root = {
+          size = "100%";
+          content = {
+            type = "btrfs";
+            extraArgs = [ "-L" "nixos" ];
+            mountpoint = "/";
+            subvolumes = {
+              root = { mountpoint = "/"; };
+              nix = { mountpoint = "/nix"; };
+              persist = { mountpoint = "/persist"; };
+              log = { mountpoint = "/var/log"; };
+              tmp = { mountpoint = "/tmp"; };
             };
           };
         };
