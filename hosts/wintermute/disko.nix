@@ -21,7 +21,7 @@
           content = { type = "swap"; };
         };
         secure = {
-          size = "50G";
+          size = "3G";
           content = {
             type = "luks";
             name = "secure";
