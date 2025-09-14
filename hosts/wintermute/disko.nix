@@ -6,7 +6,7 @@
       type = "gpt";
       partitions = {
         ESP = {
-          size = "512MiB";
+          size = "512M";
           type = "EF00";
           content = {
             type = "filesystem";
@@ -16,12 +16,12 @@
           };
         };
         swap = {
-          size = "8GiB";
+          size = "8G";
           type = "8200";
           content = { type = "swap"; };
         };
         secure = {
-          size = "50GiB";
+          size = "50G";
           content = {
             type = "luks";
             name = "secure";
