@@ -8,9 +8,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence.url = "github:nix-community/impermanence";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
+  outputs = { self, nixpkgs, nixos-generators, impermanence, disko, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -23,6 +27,7 @@
           ./hosts/wintermute/hardware-configuration.nix
           ./hosts/wintermute/disko.nix
           impermanence.nixosModules.impermanence
+          disko.nixosModules.disko
         ];
       };
 

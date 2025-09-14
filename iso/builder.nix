@@ -55,21 +55,14 @@
     # Clone dotfiles to temporary location first
     git clone "$REPO" /tmp/dotfiles
 
-    # Run disko from temporary location
+    # Run disko from temporary location - this will partition and mount everything
     disko --mode disko /tmp/dotfiles/hosts/"$HOSTNAME"/disko.nix
 
     # Wait for devices to be ready
     sleep 2
 
-    # Mount the root btrfs filesystem
-    mount /dev/disk/by-label/nixos /mnt
-
-    # Create root-blank snapshot for impermanence
+    # Create root-blank snapshot for impermanence (disko already mounted at /mnt)
     btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
-
-    # Mount boot partition (ESP)
-    mkdir -p /mnt/boot
-    mount /dev/disk/by-partlabel/ESP /mnt/boot
 
     # Setup LUKS encrypted partition for secure storage
     echo "Setting up encrypted secure partition..."
@@ -78,9 +71,25 @@
     echo "Please enter the same password to unlock:"
     cryptsetup open /dev/disk/by-partlabel/secure secure
 
-    # Mount secure partition
+    # Format the secure partition
+    mkfs.btrfs -L secure /dev/mapper/secure
+
+    # Mount secure partition temporarily to create subvolumes
     mkdir -p /mnt/secure
     mount /dev/mapper/secure /mnt/secure
+
+    # Create subvolumes in secure partition
+    btrfs subvolume create /mnt/secure/ssh
+    btrfs subvolume create /mnt/secure/secrets
+
+    # Unmount and create proper mount points
+    umount /mnt/secure
+    mkdir -p /mnt/secure/ssh
+    mkdir -p /mnt/secure/secrets
+
+    # Mount subvolumes to their proper locations
+    mount -o subvol=ssh /dev/mapper/secure /mnt/secure/ssh
+    mount -o subvol=secrets /dev/mapper/secure /mnt/secure/secrets
 
     # Copy dotfiles to the mounted system
     cp -r /tmp/dotfiles /mnt/etc/nixos
