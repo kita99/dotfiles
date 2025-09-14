@@ -5,6 +5,9 @@
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
+  # Enable flakes and other experimental features
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Ensure SSH starts automatically
   systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
 
@@ -45,6 +48,9 @@
     set -eux
     HOSTNAME="$1"
     REPO="https://github.com/kita99/dotfiles.git"
+
+    # Enable experimental features for this session
+    export NIX_CONFIG="experimental-features = nix-command flakes"
 
     # Clone dotfiles to temporary location first
     git clone "$REPO" /tmp/dotfiles
