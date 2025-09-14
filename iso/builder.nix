@@ -70,6 +70,9 @@
     # Copy dotfiles to the mounted system
     cp -r /tmp/dotfiles /mnt/etc/nixos
 
+    # Generate hardware-configuration.nix from current hardware
+    nixos-generate-config --root /mnt --no-filesystems
+
     # Install NixOS from flake
     nixos-install --flake /mnt/etc/nixos#"$HOSTNAME" --no-root-passwd
 
