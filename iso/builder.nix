@@ -74,7 +74,7 @@
     nixos-generate-config --root /mnt --no-filesystems
 
     # Install NixOS from flake
-    nixos-install --flake /mnt/etc/nixos#"$HOSTNAME" --no-root-passwd
+    nixos-install --flake "$REPO"#"$HOSTNAME" --no-root-passwd
 
     # Cleanup
     rm -rf /tmp/dotfiles
