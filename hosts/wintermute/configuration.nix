@@ -21,6 +21,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable linux-firmware for hardware support
+  hardware.enableRedistributableFirmware = true;
+
   environment.persistence = {
     "/persist" = {
       directories = [ "/etc/nixos" "/var/lib" ];
