@@ -47,13 +47,12 @@
     #!/bin/sh
     set -eux
     HOSTNAME="$1"
-    REPO="https://github.com/kita99/dotfiles.git"
 
     # Enable experimental features for this session
     export NIX_CONFIG="experimental-features = nix-command flakes"
 
     # Clone dotfiles to temporary location first
-    git clone "$REPO" /tmp/dotfiles
+    git clone https://github.com/kita99/dotfiles.git /tmp/dotfiles
 
     # Run disko from temporary location - this will partition and mount everything
     disko --mode disko /tmp/dotfiles/hosts/"$HOSTNAME"/disko.nix
@@ -74,7 +73,7 @@
     nixos-generate-config --root /mnt --no-filesystems
 
     # Install NixOS from flake
-    nixos-install --flake "$REPO"#"$HOSTNAME" --no-root-passwd
+    nixos-install --flake github:kita99/dotfiles#"$HOSTNAME" --no-root-passwd
 
     # Cleanup
     rm -rf /tmp/dotfiles
