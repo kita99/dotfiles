@@ -11,8 +11,8 @@
           content = {
             type = "filesystem";
             format = "vfat";
-            mountpoint = "/boot";
-            mountOptions = [ "fmask=0022" "dmask=0022" ];
+            mountpoint = "/boot/efi";
+            mountOptions = [ "defaults" "umask=0077" ];
           };
         };
         swap = {
