@@ -28,6 +28,9 @@
     preLVM = true;
   };
 
+  # Enable support for mounting LUKS devices in initrd
+  boot.initrd.systemd.enable = true;
+
   # Enable linux-firmware for hardware support
   hardware.enableRedistributableFirmware = true;
 
