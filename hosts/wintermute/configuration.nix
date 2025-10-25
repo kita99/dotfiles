@@ -22,14 +22,46 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # Enable systemd in initrd for better handling of mount dependencies
+  boot.initrd.systemd.enable = true;
+
   # Configure LUKS device
   boot.initrd.luks.devices."secure" = {
     device = "/dev/disk/by-partlabel/disk-main-secure";
     preLVM = true;
   };
 
-  # Enable support for mounting LUKS devices in initrd
-  boot.initrd.systemd.enable = true;
+  # Enable support for mounting btrfs in initrd
+  boot.initrd.supportedFilesystems = [ "btrfs" ];
+  
+  # Ensure these filesystems are available early in boot
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-partlabel/disk-main-root";
+      fsType = "btrfs";
+      options = [ "subvol=root" "compress=zstd" ];
+    };
+    "/nix" = {
+      device = "/dev/disk/by-partlabel/disk-main-root";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "compress=zstd" ];
+    };
+    "/persist" = {
+      device = "/dev/disk/by-partlabel/disk-main-root";
+      fsType = "btrfs";
+      options = [ "subvol=persist" "compress=zstd" ];
+    };
+    "/var/log" = {
+      device = "/dev/disk/by-partlabel/disk-main-root";
+      fsType = "btrfs";
+      options = [ "subvol=log" "compress=zstd" ];
+    };
+    "/tmp" = {
+      device = "/dev/disk/by-partlabel/disk-main-root";
+      fsType = "btrfs";
+      options = [ "subvol=tmp" "compress=zstd" ];
+    };
+  };
 
   # Enable linux-firmware for hardware support
   hardware.enableRedistributableFirmware = true;
