@@ -22,6 +22,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # Configure LUKS device
+  boot.initrd.luks.devices."secure" = {
+    device = "/dev/disk/by-partlabel/disk-main-secure";
+    preLVM = true;
+  };
+
   # Enable linux-firmware for hardware support
   hardware.enableRedistributableFirmware = true;
 
