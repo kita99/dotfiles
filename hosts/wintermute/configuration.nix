@@ -20,6 +20,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   # Enable linux-firmware for hardware support
   hardware.enableRedistributableFirmware = true;
