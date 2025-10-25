@@ -26,10 +26,10 @@
   boot.initrd.systemd.enable = true;
 
   # Configure LUKS device
-  boot.initrd.luks.devices."secure" = {
-    device = "/dev/disk/by-label/secure";
-    preLVM = true;
-  };
+  # boot.initrd.luks.devices."secure" = {
+  #   device = "/dev/disk/by-label/secure";
+  #   preLVM = true;
+  # };
 
   # Enable support for mounting btrfs in initrd
   boot.initrd.supportedFilesystems = [ "btrfs" ];
