@@ -27,7 +27,7 @@
 
   # Configure LUKS device
   boot.initrd.luks.devices."secure" = {
-    device = "/dev/disk/by-partlabel/disk-main-secure";
+    device = "/dev/disk/by-label/secure";
     preLVM = true;
   };
 
@@ -37,27 +37,27 @@
   # Ensure these filesystems are available early in boot
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-partlabel/disk-main-root";
+      device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = [ "subvol=root" "compress=zstd" ];
     };
     "/nix" = {
-      device = "/dev/disk/by-partlabel/disk-main-root";
+      device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = [ "subvol=nix" "compress=zstd" ];
     };
     "/persist" = {
-      device = "/dev/disk/by-partlabel/disk-main-root";
+      device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = [ "subvol=persist" "compress=zstd" ];
     };
     "/var/log" = {
-      device = "/dev/disk/by-partlabel/disk-main-root";
+      device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = [ "subvol=log" "compress=zstd" ];
     };
     "/tmp" = {
-      device = "/dev/disk/by-partlabel/disk-main-root";
+      device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = [ "subvol=tmp" "compress=zstd" ];
     };
