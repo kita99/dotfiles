@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [ ./hardware-configuration.nix ];
+
   networking.hostName = "wintermute";
 
   users.mutableUsers = false;
