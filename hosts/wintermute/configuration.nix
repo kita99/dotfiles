@@ -22,7 +22,6 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   # Enable systemd in initrd for better handling of mount dependencies
   boot.initrd.systemd.enable = true;
