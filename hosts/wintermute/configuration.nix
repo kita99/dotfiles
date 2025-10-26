@@ -7,7 +7,7 @@
 
   users.mutableUsers = true;
 
-  users.users.root.initialHashedPassword = "";
+  users.users.root.initialPassword = "";
 
   users.users.kita = {
     openssh.authorizedKeys.keys = [
