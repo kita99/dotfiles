@@ -25,7 +25,7 @@
           content = {
             type = "luks";
             name = "secure";
-            passwordFile = "/tmp/secret.key"
+            passwordFile = "/tmp/secret.key";
             content = {
               type = "btrfs";
               extraArgs = [ "-L" "secure" ];
