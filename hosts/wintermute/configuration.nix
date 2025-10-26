@@ -5,7 +5,7 @@
 
   networking.hostName = "wintermute";
 
-  users.mutableUsers = false;
+  users.mutableUsers = true;
 
   users.users.root.initialHashedPassword = "";
 
