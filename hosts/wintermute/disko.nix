@@ -11,7 +11,7 @@
           content = {
             type = "filesystem";
             format = "vfat";
-            mountpoint = "/boot/efi";
+            mountpoint = "/boot";
             mountOptions = [ "defaults" "umask=0077" ];
           };
         };
@@ -25,6 +25,7 @@
           content = {
             type = "luks";
             name = "secure";
+            passwordFile = "/tmp/secret.key"
             content = {
               type = "btrfs";
               extraArgs = [ "-L" "secure" ];
