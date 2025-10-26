@@ -24,7 +24,6 @@
         inherit system;
         modules = [
           ./hosts/wintermute/configuration.nix
-          ./hosts/wintermute/hardware-configuration.nix
           ./hosts/wintermute/disko.nix
           impermanence.nixosModules.impermanence
           disko.nixosModules.disko

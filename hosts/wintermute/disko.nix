@@ -54,4 +54,11 @@
       };
     };
   };
+
+  fileSystems."/nix".neededForBoot = true;
+  fileSystems."/persist".neededForBoot = true;
+  fileSystems."/var/log".neededForBoot = true;
+  fileSystems."/secure".neededForBoot = true;
+  fileSystems."/secure/ssh".neededForBoot = true;
+  fileSystems."/secure/secrets".neededForBoot = true;
 }
