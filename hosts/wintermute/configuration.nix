@@ -29,14 +29,11 @@
   # Enable systemd in initrd for better handling of mount dependencies
   boot.initrd.systemd.enable = true;
 
-  # Configure LUKS device
-  # boot.initrd.luks.devices."secure" = {
-  #   device = "/dev/disk/by-label/secure";
-  #   preLVM = true;
-  # };
-
-  # Enable support for mounting btrfs in initrd
   boot.initrd.supportedFilesystems = [ "btrfs" ];
+  boot.supportedFilesystems = [ "btrfs" ];
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_blk" "ehci_pci" "nvme" "sd_mod" "sr_mod" "ata_piix" "uhci_hcd" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-intel" ];
   
   # Ensure these filesystems are available early in boot
   # fileSystems = {
