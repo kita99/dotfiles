@@ -28,7 +28,6 @@
 
   # Set empty password for root user and disable password aging
   users.users.root = {
-    hashedPassword = "";
     password = "";
   };
 
@@ -51,32 +50,8 @@
     # Enable experimental features for this session
     export NIX_CONFIG="experimental-features = nix-command flakes"
 
-    # Clone dotfiles to temporary location first
-    git clone https://github.com/kita99/dotfiles.git /tmp/dotfiles
-
-    # Run disko from temporary location - this will partition and mount everything
-    disko --mode disko /tmp/dotfiles/hosts/"$HOSTNAME"/disko.nix
-
-    # Wait for devices to be ready
-    sleep 2
-
-    # Create root-blank snapshot for impermanence (disko already mounted at /mnt)
-    btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
-
-    # Create necessary directory structure
-    mkdir -p /mnt/etc/nixos
-
-    # Copy dotfiles to the mounted system
-    cp -r /tmp/dotfiles /mnt/etc/nixos
-
-    # Generate hardware-configuration.nix from current hardware
-    nixos-generate-config --root /mnt --no-filesystems
-
     # Install NixOS from flake
-    nixos-install --flake github:kita99/dotfiles#"$HOSTNAME" --no-root-passwd
-
-    # Cleanup
-    rm -rf /tmp/dotfiles
+    disko-install --write-efi-boot-entries --flake github:kita99/dotfiles#"$HOSTNAME" --disk main /dev/sda
   '';
   environment.etc."auto-install.sh".mode = "0755";
 }
