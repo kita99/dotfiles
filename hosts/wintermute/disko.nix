@@ -12,7 +12,7 @@
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot";
-            mountOptions = [ "defaults" "umask=0077" ];
+            mountOptions = [ "umask=0077" ];
           };
         };
         swap = {
@@ -25,7 +25,6 @@
           content = {
             type = "luks";
             name = "secure";
-            passwordFile = "/tmp/secret.key";
             content = {
               type = "btrfs";
               extraArgs = [ "-L" "secure" ];
