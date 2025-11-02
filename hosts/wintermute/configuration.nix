@@ -32,35 +32,6 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-intel" ];
   
-  # Ensure these filesystems are available early in boot
-  # fileSystems = {
-  #   "/" = {
-  #     device = "/dev/disk/by-label/nixos";
-  #     fsType = "btrfs";
-  #     options = [ "subvol=root" "compress=zstd" ];
-  #   };
-  #   "/nix" = {
-  #     device = "/dev/disk/by-label/nixos";
-  #     fsType = "btrfs";
-  #     options = [ "subvol=nix" "compress=zstd" ];
-  #   };
-  #   "/persist" = {
-  #     device = "/dev/disk/by-label/nixos";
-  #     fsType = "btrfs";
-  #     options = [ "subvol=persist" "compress=zstd" ];
-  #   };
-  #   "/var/log" = {
-  #     device = "/dev/disk/by-label/nixos";
-  #     fsType = "btrfs";
-  #     options = [ "subvol=log" "compress=zstd" ];
-  #   };
-  #   "/tmp" = {
-  #     device = "/dev/disk/by-label/nixos";
-  #     fsType = "btrfs";
-  #     options = [ "subvol=tmp" "compress=zstd" ];
-  #   };
-  # };
-
   # Enable linux-firmware for hardware support
   hardware.enableRedistributableFirmware = true;
 

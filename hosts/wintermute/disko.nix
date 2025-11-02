@@ -20,22 +20,22 @@
           type = "8200";
           content = { type = "swap"; };
         };
-        secure = {
-          size = "3G";
-          content = {
-            type = "luks";
-            name = "secure";
-            content = {
-              type = "btrfs";
-              extraArgs = [ "-L" "secure" ];
-              mountpoint = "/secure";
-              subvolumes = {
-                ssh = { mountpoint = "/secure/ssh"; };
-                secrets = { mountpoint = "/secure/secrets"; };
-              };
-            };
-          };
-        };
+        # secure = {
+        #   size = "3G";
+        #   content = {
+        #     type = "luks";
+        #     name = "secure";
+        #     content = {
+        #       type = "btrfs";
+        #       extraArgs = [ "-L" "secure" ];
+        #       mountpoint = "/secure";
+        #       subvolumes = {
+        #         ssh = { mountpoint = "/secure/ssh"; };
+        #         secrets = { mountpoint = "/secure/secrets"; };
+        #       };
+        #     };
+        #   };
+        # };
         root = {
           size = "100%";
           content = {
@@ -55,10 +55,10 @@
     };
   };
 
-  fileSystems."/nix".neededForBoot = true;
-  fileSystems."/persist".neededForBoot = true;
-  fileSystems."/var/log".neededForBoot = true;
-  fileSystems."/secure".neededForBoot = true;
-  fileSystems."/secure/ssh".neededForBoot = true;
-  fileSystems."/secure/secrets".neededForBoot = true;
+  # fileSystems."/nix".neededForBoot = true;
+  # fileSystems."/persist".neededForBoot = true;
+  # fileSystems."/var/log".neededForBoot = true;
+  # fileSystems."/secure".neededForBoot = true;
+  # fileSystems."/secure/ssh".neededForBoot = true;
+  # fileSystems."/secure/secrets".neededForBoot = true;
 }
