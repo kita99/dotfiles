@@ -3,7 +3,7 @@
 {
   networking.hostName = "wintermute";
 
-  users.mutableUsers = true;
+  users.mutableUsers = false;
 
   users.users.root.initialPassword = "hello";
 
