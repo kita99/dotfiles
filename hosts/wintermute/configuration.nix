@@ -29,9 +29,9 @@
   boot.initrd.supportedFilesystems = [ "btrfs" ];
   boot.supportedFilesystems = [ "btrfs" ];
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_blk" "ehci_pci" "nvme" "sd_mod" "sr_mod" "ata_piix" "uhci_hcd" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  
+  boot.initrd.kernelModules = [ "dm-snapshot" "vmd" "sr_mod" ];
+  boot.kernelModules = [ "kvm-intel" "vmd" "sr_mod" ];
+
   # Enable linux-firmware for hardware support
   hardware.enableRedistributableFirmware = true;
 
