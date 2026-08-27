@@ -1,6 +1,7 @@
 { device ? "/dev/nvme0n1"
 , luksKeyFile ? null
 , swapSize ? "16G"
+, enrollFido2 ? false
 , ...
 }:
 
@@ -31,6 +32,10 @@
             settings = {
               allowDiscards = true;
             } // (if luksKeyFile != null then { keyFile = luksKeyFile; } else { });
+
+            inherit enrollFido2;
+
+            enrollRecovery = enrollFido2;
 
             content = {
               type = "btrfs";

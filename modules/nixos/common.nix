@@ -31,7 +31,7 @@
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
 
-  networking.wg-quick.interfaces = { };
+  networking.wg-quick.interfaces.wg0.configFile = "/persist/wireguard/wg0.conf";
 
   hardware.enableRedistributableFirmware = true;
 

@@ -142,6 +142,20 @@ let
       detail = "hashedPassword=${toString (config.users.users.kita.hashedPassword or "null")} file=${toString (config.users.users.kita.hashedPasswordFile or "unset")}";
     }
     {
+      name = "wireguard config referenced from /persist, not inlined";
+      ok =
+        let i = config.networking.wg-quick.interfaces.wg0 or null;
+        in i != null
+          && lib.hasPrefix "/persist/" (i.configFile or "")
+          && (i.privateKey or null) == null;
+      detail = "configFile = ${config.networking.wg-quick.interfaces.wg0.configFile or "unset"}";
+    }
+    {
+      name = "FIDO2 enrolment has a recovery passphrase alongside it";
+      ok = !luks.enrollFido2 || luks.enrollRecovery;
+      detail = "enrollFido2=${lib.boolToString luks.enrollFido2} enrollRecovery=${lib.boolToString luks.enrollRecovery}";
+    }
+    {
       name = "zsh is enabled and is kita's login shell";
       ok = config.programs.zsh.enable
         && (config.users.users.kita.shell.pname or "") == "zsh"
