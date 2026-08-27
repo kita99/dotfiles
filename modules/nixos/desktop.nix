@@ -77,6 +77,9 @@
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  services.pcscd.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
   services.gnome.gnome-keyring.enable = true;
   programs.dconf.enable = true;
 }

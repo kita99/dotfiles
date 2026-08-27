@@ -30,7 +30,39 @@
     curl
     neovim
     disko
+    age
+    age-plugin-yubikey
+    wireguard-tools
+    yubikey-manager
   ];
+
+  services.pcscd.enable = true;
+
+  environment.etc."migration/identity.yk.age".source = ../secrets/identity.yk.age;
+  environment.etc."migration/wg0.conf.yk.age".source = ../secrets/wg0.conf.yk.age;
+  environment.etc."migration/nm-connections.tar.yk.age".source =
+    ../secrets/nm-connections.tar.yk.age;
+
+  environment.etc."migration/unlock.sh" = {
+    mode = "0755";
+    text = ''
+      #!/bin/sh
+      set -eu
+      out=''${1:-/tmp}
+
+      age-plugin-yubikey --identity > "$out/yk-stub.txt"
+      grep -q AGE-PLUGIN-YUBIKEY "$out/yk-stub.txt" || {
+        echo "no YubiKey identity found - is it inserted, and is pcscd up?" >&2
+        exit 1
+      }
+
+      age -d -i "$out/yk-stub.txt" -o "$out/identity.txt"       /etc/migration/identity.yk.age
+      chmod 600 "$out/identity.txt"
+      age -d -i "$out/yk-stub.txt" -o "$out/wg0.conf"           /etc/migration/wg0.conf.yk.age
+      age -d -i "$out/yk-stub.txt" -o "$out/nm-connections.tar" /etc/migration/nm-connections.tar.yk.age
+      echo "unlocked into $out"
+    '';
+  };
 
   environment.etc."auto-install.sh".text = ''
     #!/bin/sh

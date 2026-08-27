@@ -156,6 +156,11 @@ let
       detail = "enrollFido2=${lib.boolToString luks.enrollFido2} enrollRecovery=${lib.boolToString luks.enrollRecovery}";
     }
     {
+      name = "pcscd enabled for YubiKey PIV";
+      ok = config.services.pcscd.enable;
+      detail = "age-plugin-yubikey cannot reach the PIV applet without pcscd";
+    }
+    {
       name = "zsh is enabled and is kita's login shell";
       ok = config.programs.zsh.enable
         && (config.users.users.kita.shell.pname or "") == "zsh"
