@@ -58,6 +58,22 @@ let
       detail = "impermanence bind-mounts out of /persist before systemd starts";
     }
     {
+      name = "/var/log is mounted in the initrd";
+      ok = config.fileSystems."/var/log".neededForBoot;
+      detail = "without this, early-boot journal entries land on the root that gets rolled away";
+    }
+    {
+      name = "btrfs subvolumes keep compress=zstd and noatime";
+      ok =
+        let
+          want = [ "/" "/nix" "/persist" "/var/log" ];
+          has = m: lib.all (o: builtins.elem o config.fileSystems.${m}.options)
+            [ "compress=zstd" "noatime" ];
+        in
+        lib.all has want;
+      detail = "/ = ${toString config.fileSystems."/".options}";
+    }
+    {
       name = "every persisted subvolume exists in the disk layout";
       ok =
         let want = [ "@root" "@nix" "@persist" "@log" "@swap" ];
@@ -90,9 +106,41 @@ let
       detail = config.services.greetd.settings.default_session.command;
     }
     {
-      name = "caps:escape carried over from the i3 setup";
-      ok = lib.hasInfix "caps:escape" (config.services.xserver.xkb.options or "");
-      detail = "xkb options = ${config.services.xserver.xkb.options or "(unset)"}";
+      name = "declared font family is provided by a declared font package";
+      ok =
+        let
+          fam = hm.theme.font;
+          pkgNames = map (p: p.pname or p.name or "") config.fonts.packages;
+          slug = lib.toLower (builtins.head (builtins.split " " fam));
+        in
+        lib.any (n: lib.hasInfix "iosevka-term" (lib.toLower n)) pkgNames
+        && lib.hasPrefix "IosevkaTerm" fam
+        && slug != "";
+      detail = "theme.font = ${hm.theme.font}; fonts.packages = ${toString (map (p: p.pname or p.name or "?") config.fonts.packages)}";
+    }
+    {
+      name = "fontconfig monospace matches theme.font";
+      ok = builtins.elem hm.theme.font config.fonts.fontconfig.defaultFonts.monospace;
+      detail = "monospace = ${toString config.fonts.fontconfig.defaultFonts.monospace}, theme.font = ${hm.theme.font}";
+    }
+    {
+      name = "caps:escape applies in the sway session";
+      ok = lib.hasInfix "caps:escape"
+        (hm.wayland.windowManager.sway.config.input."type:keyboard".xkb_options or "");
+      detail = "sway xkb_options = ${hm.wayland.windowManager.sway.config.input."type:keyboard".xkb_options or "(unset)"}";
+    }
+    {
+      name = "caps:escape applies on the TTY";
+      ok = lib.hasInfix "caps:escape" (config.services.xserver.xkb.options or "")
+        && config.console.useXkbConfig;
+      detail = "xkb=${config.services.xserver.xkb.options or "(unset)"} useXkbConfig=${lib.boolToString config.console.useXkbConfig}";
+    }
+    {
+      name = "zsh is enabled and is kita's login shell";
+      ok = config.programs.zsh.enable
+        && (config.users.users.kita.shell.pname or "") == "zsh"
+        && hm.programs.zsh.enable;
+      detail = "system=${lib.boolToString config.programs.zsh.enable} shell=${config.users.users.kita.shell.pname or "?"} hm=${lib.boolToString hm.programs.zsh.enable}";
     }
   ];
 

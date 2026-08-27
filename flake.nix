@@ -68,6 +68,34 @@
         ];
       };
 
+      nixosConfigurations.wintermute-installtest = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/wintermute/installtest.nix
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.kita = import ./modules/home;
+              backupFileExtension = "hm-bak";
+            };
+          }
+        ];
+      };
+
+      nixosConfigurations.wintermute-installtest-minimal = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/wintermute/installtest-minimal.nix
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+        ];
+      };
+
       nixosConfigurations.iso-builder = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [ ./iso/builder.nix ];
@@ -93,6 +121,10 @@
         full-system = import ./tests/full-system.nix {
           inherit pkgs impermanence home-manager;
           diskoLib = diskoLibForTests;
+        };
+
+        disko-install = import ./tests/disko-install.nix {
+          inherit pkgs self disko;
         };
 
         impermanence = import ./tests/impermanence.nix {
