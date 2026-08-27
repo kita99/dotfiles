@@ -21,7 +21,7 @@
 
     openssh.authorizedKeys.keys = import ../../lib/authorized-keys.nix;
 
-    hashedPassword = "!";
+    hashedPasswordFile = "/persist/passwd/kita";
   };
 
   users.users.root.hashedPassword = "!";

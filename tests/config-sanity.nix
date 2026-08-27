@@ -136,6 +136,12 @@ let
       detail = "xkb=${config.services.xserver.xkb.options or "(unset)"} useXkbConfig=${lib.boolToString config.console.useXkbConfig}";
     }
     {
+      name = "no password hash committed; read from /persist at runtime";
+      ok = (config.users.users.kita.hashedPassword or null) == null
+        && lib.hasPrefix "/persist/" (config.users.users.kita.hashedPasswordFile or "");
+      detail = "hashedPassword=${toString (config.users.users.kita.hashedPassword or "null")} file=${toString (config.users.users.kita.hashedPasswordFile or "unset")}";
+    }
+    {
       name = "zsh is enabled and is kita's login shell";
       ok = config.programs.zsh.enable
         && (config.users.users.kita.shell.pname or "") == "zsh"
