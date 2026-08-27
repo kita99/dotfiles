@@ -54,13 +54,13 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      nerd-fonts.iosevka
+      nerd-fonts.iosevka-term
       noto-fonts
       noto-fonts-color-emoji
       font-awesome
     ];
     fontconfig.defaultFonts = {
-      monospace = [ "Iosevka Term Nerd Font Mono" ];
+      monospace = [ "IosevkaTerm Nerd Font Mono" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

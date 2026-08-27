@@ -25,7 +25,7 @@ in
 
     font = lib.mkOption {
       type = lib.types.str;
-      default = "Iosevka Term Nerd Font Mono";
+      default = "IosevkaTerm Nerd Font Mono";
       description = "Monospace font, matching the old i3/kitty configuration.";
     };
 
